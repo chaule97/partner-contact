@@ -22,7 +22,11 @@ class ResPartnerIdNumber(models.Model):
             if count > 1:
                 raise ValidationError(
                     _(
-                        "The Id {} in the category {} could not be created because "
-                        "it already exists"
-                    ).format(rec.name, rec.category_id.name)
+                        "The Id %(name)s in the category %(category_name)s "
+                        "could not be created because it already exists"
+                    )
+                    % {
+                        "name": rec.name,
+                        "category_name": rec.category_id.name,
+                    }
                 )
