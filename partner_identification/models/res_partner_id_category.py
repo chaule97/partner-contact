@@ -73,12 +73,18 @@ class ResPartnerIdCategory(models.Model):
             raise UserError(
                 _(
                     "Error when evaluating the id_category "
-                    "validation code: \n {name} \n({error})"
-                ).format(name=self.name, error=e)
+                    "validation code: \n %(name)s \n(%(error)s)"
+                )
+                % {
+                    "name": self.name,
+                    "error": e,
+                }
             ) from e
         if eval_context.get("failed", False):
             raise ValidationError(
-                _("{id_name} is not a valid {cat_name} identifier").format(
-                    id_name=id_number.name, cat_name=self.name
-                )
+                _("{%(id_name)s is not a valid %(cat_name)s identifier")
+                % {
+                    "id_name": id_number.name,
+                    "cat_name": self.name,
+                }
             )
